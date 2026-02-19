@@ -1,0 +1,40 @@
+{
+  "name": "@ktmcp-cli/bunqcom",
+  "version": "1.0.0",
+  "description": "Production-ready CLI for bunq API - mobile banking, payments, accounts, cards",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "bunqcom": "bin/bunqcom.js"
+  },
+  "keywords": [
+    "bunq",
+    "banking",
+    "payments",
+    "accounts",
+    "cards",
+    "cli",
+    "api",
+    "ktmcp"
+  ],
+  "author": "KTMCP",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "axios": "^1.6.7",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.1",
+    "conf": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktmcp-cli/bunqcom.git"
+  },
+  "homepage": "https://killthemcp.com/bunqcom-cli",
+  "bugs": {
+    "url": "https://github.com/ktmcp-cli/bunqcom/issues"
+  }
+}
