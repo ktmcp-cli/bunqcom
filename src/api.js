@@ -1,142 +1,128 @@
 import axios from 'axios';
 import { getConfig } from './config.js';
 
-const BUNQ_SANDBOX_URL = 'https://public-api.sandbox.bunq.com/v1';
-const BUNQ_PRODUCTION_URL = 'https://api.bunq.com/v1';
-
-function getBaseUrl() {
-  const env = getConfig('environment') || 'sandbox';
-  return env === 'production' ? BUNQ_PRODUCTION_URL : BUNQ_SANDBOX_URL;
+function getBaseURL() {
+  const configuredUrl = getConfig('baseUrl');
+  return configuredUrl || 'https://public-api.sandbox.bunq.com/{basePath}';
 }
 
-/**
- * Make an authenticated API request
- */
-async function apiRequest(method, endpoint, data = null, params = null) {
-  const apiKey = getConfig('apiKey');
-  const sessionToken = getConfig('sessionToken');
-
-  if (!apiKey) {
-    throw new Error('API key not configured. Run: bunqcom config set --api-key <key>');
-  }
-
-  const config = {
-    method,
-    url: `${getBaseUrl()}${endpoint}`,
-    headers: {
-      'X-Bunq-Client-Authentication': sessionToken || apiKey,
-      'Cache-Control': 'no-cache',
-      'User-Agent': 'bunqcom-cli/1.0.0',
-      'X-Bunq-Geolocation': '0 0 0 0 000',
-      'X-Bunq-Language': 'en_US',
-      'X-Bunq-Region': 'en_US',
-      'Content-Type': 'application/json'
-    }
+function getHeaders() {
+  const headers = {
+    'Content-Type': 'application/json'
   };
 
-  if (params) config.params = params;
-  if (data) config.data = data;
+  const apiKey = getConfig('apiKey');
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
 
+  return headers;
+}
+
+async function request(endpoint, method = 'GET', data = null) {
+  const baseURL = getBaseURL();
   try {
+    const config = {
+      method,
+      url: `${baseURL}${endpoint}`,
+      headers: getHeaders()
+    };
+
+    if (data) {
+      config.data = data;
+    }
+
     const response = await axios(config);
     return response.data;
   } catch (error) {
-    handleApiError(error);
-  }
-}
-
-function handleApiError(error) {
-  if (error.response) {
-    const status = error.response.status;
-    const data = error.response.data;
-
-    if (status === 401) {
-      throw new Error('Authentication failed. Check your API key or session token.');
-    } else if (status === 403) {
-      throw new Error('Access forbidden. Check your permissions.');
-    } else if (status === 404) {
-      throw new Error('Resource not found.');
-    } else if (status === 429) {
-      throw new Error('Rate limit exceeded. Please wait before retrying.');
-    } else {
-      const message = data?.Error?.[0]?.error_description || JSON.stringify(data);
-      throw new Error(`API Error (${status}): ${message}`);
+    if (error.response?.data) {
+      throw new Error(`API Error: ${JSON.stringify(error.response.data)}`);
     }
-  } else if (error.request) {
-    throw new Error('No response from bunq API. Check your internet connection.');
-  } else {
-    throw error;
+    throw new Error(`Request failed: ${error.message}`);
   }
 }
 
 // ============================================================
-// USER
+// API Methods
 // ============================================================
 
-export async function getUser() {
-  return await apiRequest('GET', '/user');
+/**
+ * /attachment-public
+ */
+export async function cREATE_AttachmentPublic(params = {}) {
+  const endpoint = '/attachment-public';
+  return await request(endpoint, 'POST', params);
 }
 
-// ============================================================
-// MONETARY ACCOUNTS
-// ============================================================
-
-export async function listMonetaryAccounts(userId) {
-  return await apiRequest('GET', `/user/${userId}/monetary-account`);
+/**
+ * /attachment-public/{attachment-publicUUID}/content
+ */
+export async function list_all_Content_for_AttachmentPublic(params = {}) {
+  const endpoint = '/attachment-public/{attachment-publicUUID}/content';
+  return await request(endpoint, 'GET', params);
 }
 
-export async function getMonetaryAccount(userId, accountId) {
-  return await apiRequest('GET', `/user/${userId}/monetary-account/${accountId}`);
+/**
+ * /attachment-public/{itemId}
+ */
+export async function rEAD_AttachmentPublic(params = {}) {
+  const endpoint = '/attachment-public/{itemId}';
+  return await request(endpoint, 'GET', params);
 }
 
-export async function createMonetaryAccount(userId, data) {
-  return await apiRequest('POST', `/user/${userId}/monetary-account`, data);
+/**
+ * /avatar
+ */
+export async function cREATE_Avatar(params = {}) {
+  const endpoint = '/avatar';
+  return await request(endpoint, 'POST', params);
 }
 
-// ============================================================
-// PAYMENTS
-// ============================================================
-
-export async function listPayments(userId, accountId, params = {}) {
-  return await apiRequest('GET', `/user/${userId}/monetary-account/${accountId}/payment`, null, params);
+/**
+ * /avatar/{itemId}
+ */
+export async function rEAD_Avatar(params = {}) {
+  const endpoint = '/avatar/{itemId}';
+  return await request(endpoint, 'GET', params);
 }
 
-export async function getPayment(userId, accountId, paymentId) {
-  return await apiRequest('GET', `/user/${userId}/monetary-account/${accountId}/payment/${paymentId}`);
+/**
+ * /device
+ */
+export async function list_all_Device(params = {}) {
+  const endpoint = '/device';
+  return await request(endpoint, 'GET', params);
 }
 
-export async function createPayment(userId, accountId, data) {
-  return await apiRequest('POST', `/user/${userId}/monetary-account/${accountId}/payment`, data);
+/**
+ * /device-server
+ */
+export async function list_all_DeviceServer(params = {}) {
+  const endpoint = '/device-server';
+  return await request(endpoint, 'GET', params);
 }
 
-// ============================================================
-// CARDS
-// ============================================================
-
-export async function listCards(userId) {
-  return await apiRequest('GET', `/user/${userId}/card`);
+/**
+ * /device-server
+ */
+export async function cREATE_DeviceServer(params = {}) {
+  const endpoint = '/device-server';
+  return await request(endpoint, 'POST', params);
 }
 
-export async function getCard(userId, cardId) {
-  return await apiRequest('GET', `/user/${userId}/card/${cardId}`);
+/**
+ * /device-server/{itemId}
+ */
+export async function rEAD_DeviceServer(params = {}) {
+  const endpoint = '/device-server/{itemId}';
+  return await request(endpoint, 'GET', params);
 }
 
-export async function createCard(userId, data) {
-  return await apiRequest('POST', `/user/${userId}/card`, data);
+/**
+ * /device/{itemId}
+ */
+export async function rEAD_Device(params = {}) {
+  const endpoint = '/device/{itemId}';
+  return await request(endpoint, 'GET', params);
 }
 
-// ============================================================
-// REQUEST INQUIRIES
-// ============================================================
-
-export async function listRequestInquiries(userId, accountId) {
-  return await apiRequest('GET', `/user/${userId}/monetary-account/${accountId}/request-inquiry`);
-}
-
-export async function createRequestInquiry(userId, accountId, data) {
-  return await apiRequest('POST', `/user/${userId}/monetary-account/${accountId}/request-inquiry`, data);
-}
-
-export async function getRequestInquiry(userId, requestId) {
-  return await apiRequest('GET', `/user/${userId}/request-inquiry/${requestId}`);
-}

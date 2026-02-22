@@ -1,18 +1,14 @@
 {
   "name": "@ktmcp-cli/bunqcom",
   "version": "1.0.0",
-  "description": "Production-ready CLI for bunq API - mobile banking, payments, accounts, cards",
+  "description": "Production-ready CLI for bunq API",
   "type": "module",
   "main": "src/index.js",
   "bin": {
     "bunqcom": "bin/bunqcom.js"
   },
   "keywords": [
-    "bunq",
-    "banking",
-    "payments",
-    "accounts",
-    "cards",
+    "bunqcom",
     "cli",
     "api",
     "ktmcp"

@@ -1,0 +1,9 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="200" fill="#1a1a1a"/>
+  <text x="400" y="100" font-family="Arial, sans-serif" font-size="48" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
+    bunq API CLI
+  </text>
+  <text x="400" y="150" font-family="Arial, sans-serif" font-size="16" fill="#888888" text-anchor="middle" dominant-baseline="middle">
+    @ktmcp-cli/bunqcom
+  </text>
+</svg>

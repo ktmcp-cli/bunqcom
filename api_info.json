@@ -1,0 +1,128 @@
+{
+  "slug": "bunqcom",
+  "title": "bunq API",
+  "description": "***UPDATE:*** *We have released a [beta version of the new bunq API documentation.](https://beta.doc.bunq.com)*\n\n***NOTICE:***  *We have updated the sandbox base url to `https://public-api.sandbox.bun",
+  "base_url": "https://public-api.sandbox.bunq.com/{basePath}",
+  "endpoints": [
+    {
+      "path": "/attachment-public",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_AttachmentPublic"
+    },
+    {
+      "path": "/attachment-public/{attachment-publicUUID}/content",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_Content_for_AttachmentPublic"
+    },
+    {
+      "path": "/attachment-public/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_AttachmentPublic"
+    },
+    {
+      "path": "/avatar",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_Avatar"
+    },
+    {
+      "path": "/avatar/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_Avatar"
+    },
+    {
+      "path": "/device",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_Device"
+    },
+    {
+      "path": "/device-server",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_DeviceServer"
+    },
+    {
+      "path": "/device-server",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_DeviceServer"
+    },
+    {
+      "path": "/device-server/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_DeviceServer"
+    },
+    {
+      "path": "/device/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_Device"
+    },
+    {
+      "path": "/installation",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_Installation"
+    },
+    {
+      "path": "/installation",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_Installation"
+    },
+    {
+      "path": "/installation/{installationID}/server-public-key",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_ServerPublicKey_for_Installation"
+    },
+    {
+      "path": "/installation/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_Installation"
+    },
+    {
+      "path": "/payment-service-provider-credential",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_PaymentServiceProviderCredential"
+    },
+    {
+      "path": "/payment-service-provider-credential/{itemId}",
+      "method": "get",
+      "summary": "",
+      "operation_id": "READ_PaymentServiceProviderCredential"
+    },
+    {
+      "path": "/place-lookup/{place-lookupID}/photo/{photoID}/content",
+      "method": "get",
+      "summary": "",
+      "operation_id": "List_all_Content_for_PlaceLookup_Photo"
+    },
+    {
+      "path": "/sandbox-user-company",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_SandboxUserCompany"
+    },
+    {
+      "path": "/sandbox-user-person",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_SandboxUserPerson"
+    },
+    {
+      "path": "/server-error",
+      "method": "post",
+      "summary": "",
+      "operation_id": "CREATE_ServerError"
+    }
+  ]
+}

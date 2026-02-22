@@ -1,25 +1,13 @@
 import Conf from 'conf';
 
 const config = new Conf({
-  projectName: 'bunqcom-cli',
+  projectName: 'ktmcp-bunqcom',
   schema: {
     apiKey: {
       type: 'string',
       default: ''
     },
-    environment: {
-      type: 'string',
-      default: 'sandbox'
-    },
-    installationToken: {
-      type: 'string',
-      default: ''
-    },
-    sessionToken: {
-      type: 'string',
-      default: ''
-    },
-    userId: {
+    baseUrl: {
       type: 'string',
       default: ''
     }
@@ -43,13 +31,7 @@ export function clearConfig() {
 }
 
 export function isConfigured() {
-  const apiKey = config.get('apiKey');
-  return !!apiKey;
-}
-
-export function hasValidSession() {
-  const sessionToken = config.get('sessionToken');
-  return !!sessionToken;
+  return !!config.get('apiKey') || !!config.get('baseUrl');
 }
 
 export default config;
